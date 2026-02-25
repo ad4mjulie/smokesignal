@@ -1,0 +1,239 @@
+#!/usr/bin/python3
+'''
+communicate visually with another computer using QR codes
+
+QR codes sent and received start with a hash of the chunk
+last received; the remainder is the chunk being sent
+'''
+# pylint: disable=c-extension-no-member  # for cv2
+import sys, os, json, logging, posixpath  # pylint: disable=multiple-imports
+# Windows should be able to handle posixpath, and we need it for URLs
+from datetime import datetime
+from hashlib import sha256
+from tkinter import Tk, Label
+try:
+    import cv2
+except ImportError:
+    pass  # not available on iSH
+import zmq, base64  # pylint: disable=multiple-imports
+from pyzbar.pyzbar import decode, ZBarSymbol
+from PIL import Image
+from PIL.ImageTk import PhotoImage as Photo
+from monkeypatch import qrcode
+
+logging.basicConfig(level=logging.DEBUG if __debug__ else logging.INFO)
+
+HASH = sha256
+HASHLENGTH = len(HASH(b'').digest())
+EMPTY_HASH = bytes(HASHLENGTH)
+CHUNKSIZE = 256
+SERIAL_BITS = 32
+SERIAL_BYTES = SERIAL_BITS // 8
+SERIAL_MODULUS = 1 << SERIAL_BITS
+PIPE = posixpath.join(posixpath.abspath(os.curdir), 'command.pipe')
+URL = 'ipc://' + PIPE
+logging.info('IPC pipe: %s, url: %s', PIPE, URL)
+
+def transceive():
+    '''
+    listen on local socket for files to transmit, and watch for incoming
+    barcodes from peer
+    '''
+    capture = cv2.VideoCapture(0)
+    window = Tk()
+    window.geometry('+0+0')
+    label = Label(window, text='Transceiving...')
+    label.pack()
+    window.update()
+    seen = lastseen = b''
+    try:
+        context = zmq.Context()
+        socket = context.socket(zmq.REP)
+        socket.bind(URL)
+        while capture.isOpened():
+            captured = capture.read()
+            if captured[0]:
+                cv2.imshow('frame captured', captured[1])
+                # cv2.moveWindow('frame captured', 1000, 0)
+                seen = qrdecode(Image.fromarray(captured[1]))
+                if seen != lastseen:
+                    logging.debug('seen: %r', seen)
+                    lastseen = seen
+            if cv2.waitKey(1) & 0xff == ord('q'):
+                break
+    finally:
+        socket.close()
+        context.term()
+        if posixpath.exists(PIPE):
+            os.remove(PIPE)
+        capture.release()
+        cv2.destroyAllWindows()
+        window.destroy()
+
+def transmit(document):
+    '''
+    send document to peer
+    '''
+    capture = cv2.VideoCapture(0)
+    window = Tk()
+    window.geometry('+0+0')
+    label = Label(window, text='Transmitting...')
+    label.pack()
+    window.update()
+    with open(document, 'rb') as senddata:
+        serial = 0
+        hashed = chunk = seen = lastseen = b''
+        while capture.isOpened():
+            if hashed == seen[SERIAL_BYTES:]:
+                logging.debug('sending chunk %d', serial)
+                chunk = senddata.read(CHUNKSIZE)
+                if chunk:
+                    codedata = serial.to_bytes(SERIAL_BYTES) + chunk
+                    hashed = chunkhash(codedata)
+                    qrshow(label, codedata)
+                else:
+                    logging.info('no more data')
+            captured = capture.read()
+            if captured[0]:
+                cv2.imshow('frame captured', captured[1])
+                # cv2.moveWindow('frame captured', 1000, 0)
+                seen = qrdecode(Image.fromarray(captured[1]))
+                if seen and seen != lastseen:
+                    logging.debug('seen: %s, hashed: %s, same: %s',
+                                  seen, hashed,
+                                  seen[SERIAL_BYTES:] == hashed)
+                    if int.from_bytes(seen[:SERIAL_BYTES]) == serial and \
+                            seen[SERIAL_BYTES:] == hashed:
+                        lastseen = seen
+                        serial = (serial + 1) % SERIAL_MODULUS
+                    else:
+                        logging.warning('bad data: %s', seen)
+                        raise ValueError('bad data')
+                elif not chunk:
+                    logging.info('finished sending %s', document)
+                    break
+            if cv2.waitKey(1) & 0xff == ord('q'):
+                break
+    capture.release()
+    cv2.destroyAllWindows()
+    window.destroy()
+
+def receive():
+    '''
+    receive document from peer
+    '''
+    capture = cv2.VideoCapture(0)
+    window = Tk()
+    window.geometry('+0+0')
+    label = Label(window, text='Receiving...')
+    label.pack()
+    window.update()
+    document = os.path.join('received', datetime.now().isoformat())
+    serial = -1
+    with open(document, 'wb') as received:
+        seen = lastseen = b''
+        while capture.isOpened():
+            captured = capture.read()
+            if captured[0]:
+                cv2.imshow('frame captured', captured[1])
+                # cv2.moveWindow('frame captured', 800, 0)
+                seen = qrdecode(Image.fromarray(captured[1]))
+                if seen and seen != lastseen:
+                    logging.debug('seen: %s', seen)
+                    lastseen = seen
+                    if int.from_bytes(seen[:SERIAL_BYTES]) == serial + 1:
+                        received.write(seen[SERIAL_BYTES:])
+                        hashed = chunkhash(seen)
+                        codedata = seen[:SERIAL_BYTES] + hashed
+                        qrshow(label, codedata)
+                        serial = (serial + 1) % SERIAL_MODULUS
+                    else:
+                        logging.warning('packet out of order: %s', seen)
+            if cv2.waitKey(1) & 0xff == ord('q'):
+                break
+    capture.release()
+    cv2.destroyAllWindows()
+    window.destroy()
+
+def qrshow(label, data):
+    '''
+    display a QR code
+    '''
+    if data:
+        try:
+            image = qrcode.make(base64.b64encode(data))
+        except ValueError:
+            logging.error('cannot make %r into barcode', data)
+            raise
+        logging.debug('image type: %s', type(image))
+        photo = Photo(image)
+        label.configure(image=photo, data=None)
+        label.image = photo  # claude: necessary to thwart garbage collection
+        label.update()
+        logging.debug('image: %s', image)
+        code = qrdecode(image)
+        logging.info('code: %r', code)
+
+def qrdecode(image):
+    r'''
+    get data from QR code image
+
+    >>> testdata = bytes(range(256))
+    >>> qr_image = qrcode.make(base64.b64encode(testdata))
+    >>> qrdecode(qr_image) == testdata
+    True
+
+    the following is from an error while transmitting /bin/bash
+
+    >>> testdata = b'\x00\x00\x02\xef\x07\x00\x00\x00\xde\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\xb0>\x13\x00\x00\x00\x00\x00\x07\x00\x00\x00\
+    ... \xdf\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xb8>\x13\x00\x00\x00\
+    ... \x00\x00\x07\x00\x00\x00\xe0\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\xc0>\x13\x00\x00\x00\x00\x00\x07\x00\x00\x00\xe1\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\x00\xc8>\x13\x00\x00\x00\x00\x00\x07\x00\x00\
+    ... \x00\xe2\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\
+    ... \x00\x00\x00\x00'
+    >>> len(testdata)  # should be 256 + 4-byte serial number prefix
+    260
+    >>> qr_image = qrcode.make(base64.b64encode(testdata))
+    >>> qrdecode(qr_image) == testdata
+    True
+    '''
+    try:
+        pil = image.convert('L')  # to grayscale
+    except AttributeError:  # cv2 frame is numpy array
+        pil = Image.fromarray(image).convert('L')
+    
+    decoded = decode(pil, symbols=[ZBarSymbol.QRCODE])
+    if decoded:
+        try:
+            return base64.b64decode(decoded[0].data)
+        except base64.binascii.Error:
+            pass
+    return b''
+
+def chunkhash(data):
+    '''
+    return binary hash of data
+    '''
+    return HASH(data).digest()
+
+if __name__ == '__main__':
+    callables = [
+        (key, value) for key, value in locals().items() if callable(value)
+    ]
+    logging.debug('callables: %s', callables)
+    if len(sys.argv) < 2:
+        logging.error('Must specify command and optional args')
+    elif sys.argv[1] not in ('transmit', 'receive', 'transceive'):
+        logging.error('%r not a recognized command', sys.argv[1])
+    else:
+        eval(sys.argv[1])(*sys.argv[2:])  # pylint: disable=eval-used
