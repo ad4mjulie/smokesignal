@@ -96,7 +96,9 @@ def transmit(document, fps=DEFAULT_FPS):
     
     window = Tk()
     window.title(f"Transmitting: {os.path.basename(document)}")
-    label = Label(window)
+    
+    status_text = f"File: {os.path.basename(document)}\nBlocks (K): {encoder.K}\nSymbol ID: 0"
+    label = Label(window, text=status_text, font=("Courier", 12), justify="left", padx=20, pady=20)
     label.pack()
 
     frame_delay = 1.0 / fps
@@ -130,6 +132,9 @@ def transmit(document, fps=DEFAULT_FPS):
             qrshow(label, full_frame)
             
             symbol_id = (symbol_id + 1) % SERIAL_MODULUS
+            
+            # Update UI metadata
+            label.config(text=f"File: {os.path.basename(document)}\nBlocks (K): {encoder.K}\nSymbol ID: {symbol_id}")
             
             elapsed = time.time() - start_time
             sleep_time = max(0, frame_delay - elapsed)
@@ -277,7 +282,7 @@ def qrshow(label, data):
         label.update()
         logging.debug('image: %s', image)
         code = qrdecode(image)
-        logging.info('code: %r', code)
+        logging.debug('code: %r', code)
 
 def qrdecode(image):
     r'''
