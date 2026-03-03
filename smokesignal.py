@@ -98,7 +98,7 @@ def transmit(document, fps=DEFAULT_FPS):
     window.title(f"Transmitting: {os.path.basename(document)}")
     
     status_text = f"File: {os.path.basename(document)}\nBlocks (K): {encoder.K}\nSymbol ID: 0"
-    label = Label(window, text=status_text, font=("Courier", 12), justify="left", padx=20, pady=20)
+    label = Label(window, text=status_text, font=("Courier", 12), justify="left", padx=20, pady=20, compound='top')
     label.pack()
 
     frame_delay = 1.0 / fps
