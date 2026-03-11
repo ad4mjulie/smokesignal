@@ -1,0 +1,353 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		083CC6DB793B4A2681BECDD5 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8075818821D64D589F4E4976 /* CoreImage.framework */; };
+		0A7954D14CDE4433A3BCAF5E /* SmokeSignalFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8EB3178CA74B1D82642062 /* SmokeSignalFrame.swift */; };
+		0BD40D02ADD44DE19584B546 /* Xor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414D7785DFF547B281D5C910 /* Xor.swift */; };
+		0C3156E8D3DD4150A387857B /* Fountain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27121F917036481D88F06DC8 /* Fountain.swift */; };
+		0EA39BA810604D3DB8C32EF8 /* SmokeSignalReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC18F036A9C460CBCCD38E7 /* SmokeSignalReceiver.swift */; };
+		1C7498824DF340CC878A7228 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F583A5639DB24BDC98D17334 /* AVFoundation.framework */; };
+		2115A7C5A22A4A82BFD5CCD1 /* SmokeSignalTransmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76F22DDA5C4ACCB6546CC7 /* SmokeSignalTransmitter.swift */; };
+		296667AA4CC1444ABC0A7A0E /* ReceiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E994461BF745FCBC2E7E95 /* ReceiveView.swift */; };
+		3A02C893538542E6A6D806D1 /* SmokeSignalMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D75C55B2CB46EE988CD1C2 /* SmokeSignalMetadata.swift */; };
+		40AF9FF9E24C450EA5B1967C /* SendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6B7483C42436FAD076501 /* SendView.swift */; };
+		448D002B295A41BB9469C29D /* CameraScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4CA515FB7D4B0AB89D4CF3 /* CameraScannerView.swift */; };
+		68830D7BB0ED4B0E840993A5 /* SmokeSignalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8141BED07940A8B2A62AD8 /* SmokeSignalApp.swift */; };
+		6A4CDF30705043E0BB606284 /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1797D8437BA43F2B3121CB0 /* PhotosUI.framework */; };
+		73B7521A30A3471D863D4385 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DD98EE5A34400EBD098A64 /* UniformTypeIdentifiers.framework */; };
+		8BA2EB9E515B4B0995D2D499 /* PRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B00C00779047A1BBAC7769 /* PRNG.swift */; };
+		C1AC5F40DECF41149064E24E /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686E75F5B24A44A099A82FC0 /* QRCodeView.swift */; };
+		D28A99A376894B7BA6A8159B /* CRC32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3740558CD94F948423F8AE /* CRC32.swift */; };
+		DE8DB03B7EE049FCA1B42338 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 246C297128AB41FC90487952 /* Assets.xcassets */; };
+		FC3527FE0A264BFFA07682C5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CED1F3709B14EA2BFEAFA45 /* ContentView.swift */; };
+		FFE01C4F83E347A5A3F5A6F4 /* ByteCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4CC9CF6094D25B363FF3E /* ByteCoding.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		19D75C55B2CB46EE988CD1C2 /* SmokeSignalMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeSignalMetadata.swift; sourceTree = "<group>"; };
+		1A76F22DDA5C4ACCB6546CC7 /* SmokeSignalTransmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeSignalTransmitter.swift; sourceTree = "<group>"; };
+		246C297128AB41FC90487952 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		27121F917036481D88F06DC8 /* Fountain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fountain.swift; sourceTree = "<group>"; };
+		30B00C00779047A1BBAC7769 /* PRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRNG.swift; sourceTree = "<group>"; };
+		3A8141BED07940A8B2A62AD8 /* SmokeSignalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeSignalApp.swift; sourceTree = "<group>"; };
+		414D7785DFF547B281D5C910 /* Xor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xor.swift; sourceTree = "<group>"; };
+		5CED1F3709B14EA2BFEAFA45 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		686E75F5B24A44A099A82FC0 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
+		70B6B7483C42436FAD076501 /* SendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendView.swift; sourceTree = "<group>"; };
+		7DC18F036A9C460CBCCD38E7 /* SmokeSignalReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeSignalReceiver.swift; sourceTree = "<group>"; };
+		8075818821D64D589F4E4976 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		8D3740558CD94F948423F8AE /* CRC32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC32.swift; sourceTree = "<group>"; };
+		9AE4CC9CF6094D25B363FF3E /* ByteCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteCoding.swift; sourceTree = "<group>"; };
+		A5E994461BF745FCBC2E7E95 /* ReceiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveView.swift; sourceTree = "<group>"; };
+		B0DD98EE5A34400EBD098A64 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+		B1797D8437BA43F2B3121CB0 /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
+		C3B7B1869B6444EFB6AE15B4 /* SmokeSignal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokeSignal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE4CA515FB7D4B0AB89D4CF3 /* CameraScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScannerView.swift; sourceTree = "<group>"; };
+		ED8EB3178CA74B1D82642062 /* SmokeSignalFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeSignalFrame.swift; sourceTree = "<group>"; };
+		F583A5639DB24BDC98D17334 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2211483464784EE4ADF8A2CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C7498824DF340CC878A7228 /* AVFoundation.framework in Frameworks */,
+				083CC6DB793B4A2681BECDD5 /* CoreImage.framework in Frameworks */,
+				6A4CDF30705043E0BB606284 /* PhotosUI.framework in Frameworks */,
+				73B7521A30A3471D863D4385 /* UniformTypeIdentifiers.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B671F6F1C4041E08CF310C7 /* SmokeSignalCore */ = {
+			isa = PBXGroup;
+			children = (
+				9AE4CC9CF6094D25B363FF3E /* ByteCoding.swift */,
+				8D3740558CD94F948423F8AE /* CRC32.swift */,
+				30B00C00779047A1BBAC7769 /* PRNG.swift */,
+				414D7785DFF547B281D5C910 /* Xor.swift */,
+				27121F917036481D88F06DC8 /* Fountain.swift */,
+				ED8EB3178CA74B1D82642062 /* SmokeSignalFrame.swift */,
+				19D75C55B2CB46EE988CD1C2 /* SmokeSignalMetadata.swift */,
+				1A76F22DDA5C4ACCB6546CC7 /* SmokeSignalTransmitter.swift */,
+				7DC18F036A9C460CBCCD38E7 /* SmokeSignalReceiver.swift */,
+			);
+			name = SmokeSignalCore;
+			path = SmokeSignalCore/Sources/SmokeSignalCore;
+			sourceTree = "<group>";
+		};
+		1F8F53CE5FA948DA983B0D80 = {
+			isa = PBXGroup;
+			children = (
+				66A92B2EB29C47D78666B429 /* SmokeSignalApp */,
+				0B671F6F1C4041E08CF310C7 /* SmokeSignalCore */,
+				BAEC3E7C9F7D4C0CA9C64A87 /* Products */,
+				B40C2A547F73465291CF668B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		66A92B2EB29C47D78666B429 /* SmokeSignalApp */ = {
+			isa = PBXGroup;
+			children = (
+				3A8141BED07940A8B2A62AD8 /* SmokeSignalApp.swift */,
+				5CED1F3709B14EA2BFEAFA45 /* ContentView.swift */,
+				686E75F5B24A44A099A82FC0 /* QRCodeView.swift */,
+				DE4CA515FB7D4B0AB89D4CF3 /* CameraScannerView.swift */,
+				70B6B7483C42436FAD076501 /* SendView.swift */,
+				A5E994461BF745FCBC2E7E95 /* ReceiveView.swift */,
+				246C297128AB41FC90487952 /* Assets.xcassets */,
+			);
+			name = SmokeSignalApp;
+			path = SmokeSignalApp;
+			sourceTree = "<group>";
+		};
+		BAEC3E7C9F7D4C0CA9C64A87 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C3B7B1869B6444EFB6AE15B4 /* SmokeSignal.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B40C2A547F73465291CF668B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F583A5639DB24BDC98D17334 /* AVFoundation.framework */,
+				8075818821D64D589F4E4976 /* CoreImage.framework */,
+				B1797D8437BA43F2B3121CB0 /* PhotosUI.framework */,
+				B0DD98EE5A34400EBD098A64 /* UniformTypeIdentifiers.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CF49F76A58C24AF48B041F41 /* SmokeSignal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 367DB7AA26434D9B80FA297C /* Build configuration list for PBXNativeTarget "SmokeSignal" */;
+			buildPhases = (
+				40ED0A03F7E1476CAD0D944F /* Sources */,
+				2211483464784EE4ADF8A2CA /* Frameworks */,
+				8618242AB2594CAA9C61562C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmokeSignal;
+			productName = SmokeSignal;
+			productReference = C3B7B1869B6444EFB6AE15B4 /* SmokeSignal.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		25305F94AC2C497CAB3DBE20 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					CF49F76A58C24AF48B041F41 = {
+						CreatedOnToolsVersion = 15.0;
+						LastSwiftMigration = 1500;
+					};
+				};
+			};
+			buildConfigurationList = 583D0B06BA914EB6B26A058A /* Build configuration list for PBXProject "SmokeSignal" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1F8F53CE5FA948DA983B0D80;
+			packageReferences = (
+			);
+			productRefGroup = BAEC3E7C9F7D4C0CA9C64A87 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CF49F76A58C24AF48B041F41 /* SmokeSignal */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8618242AB2594CAA9C61562C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE8DB03B7EE049FCA1B42338 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		40ED0A03F7E1476CAD0D944F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68830D7BB0ED4B0E840993A5 /* SmokeSignalApp.swift in Sources */,
+				FC3527FE0A264BFFA07682C5 /* ContentView.swift in Sources */,
+				C1AC5F40DECF41149064E24E /* QRCodeView.swift in Sources */,
+				448D002B295A41BB9469C29D /* CameraScannerView.swift in Sources */,
+				40AF9FF9E24C450EA5B1967C /* SendView.swift in Sources */,
+				296667AA4CC1444ABC0A7A0E /* ReceiveView.swift in Sources */,
+				FFE01C4F83E347A5A3F5A6F4 /* ByteCoding.swift in Sources */,
+				D28A99A376894B7BA6A8159B /* CRC32.swift in Sources */,
+				8BA2EB9E515B4B0995D2D499 /* PRNG.swift in Sources */,
+				0BD40D02ADD44DE19584B546 /* Xor.swift in Sources */,
+				0C3156E8D3DD4150A387857B /* Fountain.swift in Sources */,
+				0A7954D14CDE4433A3BCAF5E /* SmokeSignalFrame.swift in Sources */,
+				3A02C893538542E6A6D806D1 /* SmokeSignalMetadata.swift in Sources */,
+				2115A7C5A22A4A82BFD5CCD1 /* SmokeSignalTransmitter.swift in Sources */,
+				0EA39BA810604D3DB8C32EF8 /* SmokeSignalReceiver.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1C9667D2E3A247489AE1237C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AED6CCCF11994E92A045BE34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4DEFCAAB4CF14D4298A201D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Needed to scan SmokeSignal QR streams.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Needed to pick photos to transmit.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.smokesignal";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FF6E5A93955146279E7740A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Needed to scan SmokeSignal QR streams.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Needed to pick photos to transmit.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.smokesignal";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		367DB7AA26434D9B80FA297C /* Build configuration list for PBXNativeTarget "SmokeSignal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DEFCAAB4CF14D4298A201D0 /* Debug */,
+				FF6E5A93955146279E7740A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		583D0B06BA914EB6B26A058A /* Build configuration list for PBXProject "SmokeSignal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C9667D2E3A247489AE1237C /* Debug */,
+				AED6CCCF11994E92A045BE34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 25305F94AC2C497CAB3DBE20 /* Project object */;
+}
