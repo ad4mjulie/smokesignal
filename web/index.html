@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmokeSignal (Web)</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="./style.css" />
+  <script src="./vendor/jsqr.js"></script>
+  <script src="./vendor/qrcode.js"></script>
+</head>
+<body>
+  <main>
+    <h1>SmokeSignal - Safari/Web</h1>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Transmit</h2>
+        <label class="label" for="tx-file">File to send</label>
+        <input id="tx-file" type="file" />
+
+        <label class="label" for="tx-fps">Frame rate</label>
+        <input id="tx-fps" type="range" min="5" max="60" step="1" value="24" />
+        <div id="tx-fps-value" class="status">24 fps</div>
+
+        <div class="controls">
+          <button id="tx-start" class="primary">Start Transmitting</button>
+          <button id="tx-stop" class="secondary" disabled>Stop</button>
+        </div>
+
+        <div class="status" id="tx-status">Idle</div>
+        <canvas id="tx-canvas" width="512" height="512"></canvas>
+      </section>
+
+      <section class="panel">
+        <h2>Receive</h2>
+        <div class="controls">
+          <button id="rx-start" class="primary">Start Camera</button>
+          <button id="rx-stop" class="secondary" disabled>Stop</button>
+        </div>
+        <button id="rx-reset" class="secondary" style="margin-top:8px;">Reset Session</button>
+        <video id="rx-video" playsinline muted></video>
+        <canvas id="rx-canvas" hidden></canvas>
+        <div class="status" id="rx-status">Waiting for frames...</div>
+        <a id="rx-download" class="link-like" hidden download>Download received file</a>
+        <div class="status" id="rx-log"></div>
+      </section>
+    </div>
+
+    <footer>
+      Tips: keep the sender screen at ~60-80% brightness, avoid focus hunting, and stay within 10-20cm. If Safari blocks the camera, ensure you are on HTTPS or localhost. Protocol version: 2 (XorShift PRNG).
+    </footer>
+  </main>
+  <script type="module" src="./app.js?v=6"></script>
+</body>
+</html>

@@ -16,6 +16,32 @@ point-to-point links many kilometers distant, linking community meshes.
   running under uwsgi on backend. then it can run on iPhone with iSH.
 * needs my fork of zbar for returning bytes from decode
 
+## Web / Safari (no Xcode)
+Use the in-browser implementation under `web/` to run entirely from Safari or any modern browser. Camera access requires HTTPS or `http://localhost`.
+
+### Quick start (desktop)
+```bash
+cd web
+python3 -m http.server 8000
+# Then open http://localhost:8000 in Safari/Chrome
+```
+
+### Quick start (iPhone only, no Mac/Xcode)
+1. Install iSH (or another local-shell app with Python) on the iPhone.
+2. Copy this repo into iSH (or `git clone` inside iSH).
+3. In iSH, run `cd smokesignal/web && python3 -m http.server 8000`.
+4. In Safari on the same iPhone, open `http://127.0.0.1:8000` (loopback is allowed for camera access).
+
+### How to use (web)
+1. Open `web/index.html` via the local server above.
+2. **Transmit**: pick a file, choose FPS (default 24), click **Start Transmitting**. Animated QR frames render on the page.
+3. **Receive**: tap **Start Camera** on the other device and point it at the sender screen. Progress shows recovered blocks; a download link appears when complete.
+
+Notes
+- Protocol version stays at 2 and matches the Swift implementation's XorShift32 fountain logic.
+- For best reliability, keep sender brightness ~60-80%, keep devices steady at 10-20cm, and prefer good ambient light.
+- If the camera is blocked, ensure you're on HTTPS or localhost; mobile Safari requires a secure context for `getUserMedia`.
+
 ## iOS (Native App)
 This repo now includes a native Swift/SwiftUI implementation.
 

@@ -21,6 +21,16 @@ if ! command -v xcodebuild >/dev/null 2>&1; then
   exit 1
 fi
 
+XCODE_DEV_DIR="$(xcode-select -p 2>/dev/null || true)"
+DEVICE_SUPPORT_DIR="${XCODE_DEV_DIR}/Platforms/iPhoneOS.platform/DeviceSupport"
+if [[ -d "$DEVICE_SUPPORT_DIR" ]]; then
+  if ! find "$DEVICE_SUPPORT_DIR" -maxdepth 2 -type f -name "DeveloperDiskImage.dmg" -path "*/26.*/*" 2>/dev/null | head -n 1 | grep -q .; then
+    echo "Note: Xcode does not appear to have iOS 26.x device support installed yet."
+    echo "If you see 'iOS 26.2 is not installed', open Xcode -> Settings -> Components and install iOS 26.2."
+    echo
+  fi
+fi
+
 maybe_cleanup_disk_space() {
   if [[ ! -d "$DATA_VOLUME" ]]; then
     return 0
@@ -185,6 +195,7 @@ echo "  DEVICE_ID: $DEVICE_ID"
 echo "  TEAM_ID:   $TEAM_ID"
 echo "  BUNDLE_ID: $BUNDLE_ID"
 
+BUILD_LOG="$(mktemp /tmp/smokesignal-xcodebuild.XXXXXX.log)"
 if ! xcodebuild \
   -project "$PROJECT_PATH" \
   -scheme "$SCHEME" \
@@ -195,20 +206,36 @@ if ! xcodebuild \
   -allowProvisioningDeviceRegistration \
   DEVELOPMENT_TEAM="$TEAM_ID" \
   PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID" \
-  build; then
-  cat <<EOF
+  build 2>&1 | tee "$BUILD_LOG"; then
+  if grep -q "is not installed. Please download and install the platform from Xcode > Settings > Components" "$BUILD_LOG"; then
+    cat <<EOF
+
+xcodebuild failed because the required iOS platform component is missing.
+
+Fix (one-time):
+1) Open Xcode
+2) Xcode -> Settings -> Components
+3) Download/install "iOS 26.2" (platform/device support)
+4) Quit Xcode and re-run: ./run_on_iphone.sh
+
+If the download won't start, make sure you're connected to the internet and reboot your Mac.
+EOF
+  else
+    cat <<EOF
+
 xcodebuild failed.
 
 If the error says the device couldn't be found, Xcode can't see your iPhone as a run destination yet.
 
 Fix:
 1) Open Xcode -> Window -> Devices and Simulators
-2) Select your iPhone and follow any prompts (for example: install required iOS platform/support files like "iOS 26.2")
+2) Select your iPhone and follow any prompts
 3) Keep the iPhone unlocked, trusted, and Developer Mode enabled
 4) Re-run: ./run_on_iphone.sh
 
 If Xcode still can't see the phone, reboot your Mac and iPhone and try again.
 EOF
+  fi
   exit 1
 fi
 

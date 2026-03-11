@@ -97,9 +97,11 @@ def transmit(document, fps=DEFAULT_FPS):
     window = Tk()
     window.title(f"Transmitting: {os.path.basename(document)}")
     
-    status_text = f"File: {os.path.basename(document)}\nBlocks (K): {encoder.K}\nSymbol ID: 0"
-    label = Label(window, text=status_text, font=("Courier", 12), justify="left", padx=20, pady=20, compound='top')
-    label.pack()
+    status_text = f"File: {os.path.basename(document)}\nBlocks (K): {encoder.K}\nSymbol ID: 0\nTarget (~110%): ~{int(encoder.K * 1.1)}"
+    status_label = Label(window, text=status_text, font=("Courier", 12), justify="left", padx=20, pady=10)
+    status_label.pack()
+    qr_label = Label(window)
+    qr_label.pack()
 
     frame_delay = 1.0 / fps
     symbol_id = 0
@@ -129,12 +131,22 @@ def transmit(document, fps=DEFAULT_FPS):
             crc = zlib.crc32(frame_payload) & 0xffffffff
             full_frame = frame_payload + crc.to_bytes(4, 'big')
             
-            qrshow(label, full_frame)
+            qrshow(qr_label, full_frame)
+            
+            # Log structured debug info
+            logging.info("Sent Symbol #%d | Degree: %d | Seed: %d", symbol_id, degree, seed)
             
             symbol_id = (symbol_id + 1) % SERIAL_MODULUS
             
-            # Update UI metadata
-            label.config(text=f"File: {os.path.basename(document)}\nBlocks (K): {encoder.K}\nSymbol ID: {symbol_id}")
+            # Update UI metadata with estimated solvability (K * 1.1 symbols)
+            completion_target = int(encoder.K * 1.1)
+            status_text = (
+                f"File: {os.path.basename(document)}\n"
+                f"Blocks (K): {encoder.K}\n"
+                f"Symbols Sent: {symbol_id}\n"
+                f"Target (~110%): ~{completion_target}"
+            )
+            status_label.config(text=status_text)
             
             elapsed = time.time() - start_time
             sleep_time = max(0, frame_delay - elapsed)
@@ -232,13 +244,16 @@ def receive():
                 # Update UI stats
                 progress = (decoder.num_recovered / decoder.K) * 100
                 stats = {
+                    "Session": session_id,
+                    "Last Symbol": curr_symbol_id,
+                    "Last Seed": curr_seed,
                     "FPS": f"{fps:.1f}",
-                    "Symbols": symbols_received,
+                    "Symbols Rx": symbols_received,
                     "Recovered": f"{decoder.num_recovered}/{decoder.K}",
                     "Progress": f"{progress:.1f}%",
                     "Solvable": "Yes" if decoder.is_done() else "No"
                 }
-                label.config(text="\n".join([f"{k}: {v}" for k, v in stats.items()]))
+                label.config(text="\n".join([f"{k:12}: {v}" for k, v in stats.items()]))
                 window.update()
 
                 if decoder.is_done():
